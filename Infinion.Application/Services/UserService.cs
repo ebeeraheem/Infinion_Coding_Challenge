@@ -1,13 +1,13 @@
 ﻿using Infinion.Application.Services.Interfaces;
 using Infinion.Domain.Entities;
 using Infinion.Domain.Models;
-using Infinion.Infrastructure.HelperMethods;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Web;
 
 namespace Infinion.Application.Services;
 public class UserService : IUserService
@@ -44,10 +44,10 @@ public class UserService : IUserService
         if (result.Succeeded)
         {
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
+            Console.WriteLine(token);
             // Generate confirmation link
             var confirmationLink = GenerateEmailConfirmationLink(token, user.Email);
-
+            Console.WriteLine(confirmationLink);
             // Send confirmation email
             await _emailService.SendEmailAsync(
                 user.Email,
@@ -104,12 +104,11 @@ public class UserService : IUserService
     {
         var baseUrl = _config.GetValue<string>("AppSettings:BaseUrl");
 
-        var confirmationLink = UrlHelper.GenerateConfirmationLink(
-            baseUrl!, // baseUrl is not null here
-            "Auth",
-            "ConfirmEmail",
-            token,
-            email);
+        // Properly encode query parameters
+        var encodedToken = HttpUtility.UrlEncode(token);
+        var encodedEmail = HttpUtility.UrlEncode(email);
+
+        var confirmationLink = $"{baseUrl}/api/Auth/ConfirmEmail?token={encodedToken}&email={encodedEmail}";
 
         return confirmationLink;
     }
