@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infinion.Infrastructure", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infinion.Domain", "Infinion.Domain\Infinion.Domain.csproj", "{1B93737A-937B-42A7-9482-C6B43CEDDDE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infinion.Application", "Infinion.Application\Infinion.Application.csproj", "{D1F25FB2-5D54-4E49-9E4A-1346E0F2BB87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{1B93737A-937B-42A7-9482-C6B43CEDDDE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B93737A-937B-42A7-9482-C6B43CEDDDE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B93737A-937B-42A7-9482-C6B43CEDDDE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1F25FB2-5D54-4E49-9E4A-1346E0F2BB87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1F25FB2-5D54-4E49-9E4A-1346E0F2BB87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1F25FB2-5D54-4E49-9E4A-1346E0F2BB87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1F25FB2-5D54-4E49-9E4A-1346E0F2BB87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
