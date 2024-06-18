@@ -1,11 +1,12 @@
-﻿using MailKit.Net.Smtp;
+﻿using Infinion.Application.Services.Interfaces;
+using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using MimeKit.Text;
 
 namespace Infinion.Application.Services;
-public class EmailService
+public class EmailService : IEmailService
 {
     private readonly IConfiguration _config;
 
