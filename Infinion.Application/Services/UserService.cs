@@ -14,14 +14,17 @@ public class UserService : IUserService
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly IEmailService _emailService;
     private readonly IConfiguration _config;
 
     public UserService(UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
+        IEmailService emailService,
         IConfiguration config)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _emailService = emailService;
         _config = config;
     }
 
@@ -46,6 +49,10 @@ public class UserService : IUserService
             var confirmationLink = GenerateEmailConfirmationLink(token, user.Email);
 
             // Send confirmation email
+            await _emailService.SendEmailAsync(
+                user.Email,
+                "Email Confirmation",
+                $"Please confirm your email by clicking this link: {confirmationLink}");
         }
 
         return result;
