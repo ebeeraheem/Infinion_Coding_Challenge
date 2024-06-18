@@ -1,5 +1,6 @@
 ﻿using Infinion.Domain.Entities;
 using Infinion.Domain.Models;
+using Infinion.Infrastructure.HelperMethods;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -86,5 +87,19 @@ public class UserService : IUserService
 
         var result = await _userManager.ConfirmEmailAsync(user, token);
         return result;
+    }
+
+    private string GenerateEmailConfirmationLink(string token, string email)
+    {
+        var baseUrl = _config.GetValue<string>("AppSettings:BaseUrl");
+
+        var confirmationLink = UrlHelper.GenerateConfirmationLink(
+            baseUrl!, // baseUrl is not null here
+            "Auth", 
+            "ConfirmEmail", 
+            token, 
+            email);
+
+        return confirmationLink;
     }
 }
