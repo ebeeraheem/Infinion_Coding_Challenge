@@ -4,18 +4,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Policy;
 using System.Text;
 
 namespace Infinion.Application;
-public class UserService
+public class UserService : IUserService
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IConfiguration _config;
 
     public UserService(UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager, 
+        SignInManager<ApplicationUser> signInManager,
         IConfiguration config)
     {
         _userManager = userManager;
@@ -25,11 +24,11 @@ public class UserService
 
     public async Task<IdentityResult> RegisterUserAsync(RegisterModel model)
     {
-        var user = new ApplicationUser 
-            { 
-                UserName = model.Email, 
-                Email = model.Email 
-            };
+        var user = new ApplicationUser
+        {
+            UserName = model.Email,
+            Email = model.Email
+        };
 
         // Identity hashes passwords by default
         var result = await _userManager.CreateAsync(user, model.Password);
@@ -79,7 +78,7 @@ public class UserService
 
     public async Task<IdentityResult> ConfirmEmailAsync(string token, string email)
     {
-        var user = await _userManager.FindByEmailAsync(email) ?? 
+        var user = await _userManager.FindByEmailAsync(email) ??
             throw new InvalidOperationException("Invalid email address");
 
         var result = await _userManager.ConfirmEmailAsync(user, token);
