@@ -40,7 +40,10 @@ public class UserService : IUserService
         if (result.Succeeded)
         {
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
             // Generate confirmation link
+            var confirmationLink = GenerateEmailConfirmationLink(token, user.Email);
+
             // Send confirmation email
         }
 
