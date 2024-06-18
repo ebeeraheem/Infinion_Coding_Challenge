@@ -1,6 +1,7 @@
 ﻿using Infinion.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using System.Security.Policy;
 
 namespace Infinion.Application;
 public class UserService
@@ -16,5 +17,21 @@ public class UserService
         _userManager = userManager;
         _signInManager = signInManager;
         _configuration = configuration;
+    }
+
+    public async Task<IdentityResult> RegisterUserAsync(RegisterModel model)
+    {
+        var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
+        // Identity hashes passwords by default
+        var result = await _userManager.CreateAsync(user, model.Password);
+
+        if (result.Succeeded)
+        {
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            // Send confirmation email
+        }
+
+        return result;
     }
 }
