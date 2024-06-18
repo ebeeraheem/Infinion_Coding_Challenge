@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infinion.Presentation", "Infinion.Presentation\Infinion.Presentation.csproj", "{9C6F1B47-4DC6-4126-BE90-536BABDF8D76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infinion.Infrastructure", "Infinion.Infrastructure\Infinion.Infrastructure.csproj", "{B9EC5AC4-BE5E-4222-AF50-AF06BBD0E1E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{9C6F1B47-4DC6-4126-BE90-536BABDF8D76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C6F1B47-4DC6-4126-BE90-536BABDF8D76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C6F1B47-4DC6-4126-BE90-536BABDF8D76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9EC5AC4-BE5E-4222-AF50-AF06BBD0E1E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9EC5AC4-BE5E-4222-AF50-AF06BBD0E1E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9EC5AC4-BE5E-4222-AF50-AF06BBD0E1E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9EC5AC4-BE5E-4222-AF50-AF06BBD0E1E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
