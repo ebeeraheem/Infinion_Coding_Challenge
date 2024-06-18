@@ -22,16 +22,23 @@ public class AuthController : ControllerBase
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
-        }            
+        }
 
-        var result = await _userService.RegisterUserAsync(model);
-
-        if (!result.Succeeded)
+        try
         {
-            return BadRequest(result.Errors);
-        }            
+            var result = await _userService.RegisterUserAsync(model);
 
-        return Ok("Registration successful, please check your email to confirm your account.");
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return Ok("Registration successful, please check your email to confirm your account.");
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occured. User registration failed.");
+        }
     }
 
     [HttpPost("login")]

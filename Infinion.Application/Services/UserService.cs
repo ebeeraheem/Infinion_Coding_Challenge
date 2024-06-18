@@ -1,6 +1,7 @@
 ﻿using Infinion.Application.Services.Interfaces;
 using Infinion.Domain.Entities;
 using Infinion.Domain.Models;
+using Infinion.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -16,46 +17,62 @@ public class UserService : IUserService
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IEmailService _emailService;
     private readonly IConfiguration _config;
+    private readonly ApplicationDbContext _context;
 
     public UserService(UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IEmailService emailService,
-        IConfiguration config)
+        IConfiguration config,
+        ApplicationDbContext context)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _emailService = emailService;
         _config = config;
+        _context = context;
     }
 
     public async Task<IdentityResult> RegisterUserAsync(RegisterModel model)
     {
-        var user = new ApplicationUser
+        using var transaction = await _context.Database
+            .BeginTransactionAsync();
+        try
         {
-            UserName = model.Email,
-            Email = model.Email,
-            FirstName = model.FirstName,
-            LastName = model.LastName
-        };
+            var user = new ApplicationUser
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            };
 
-        // Identity hashes passwords by default
-        var result = await _userManager.CreateAsync(user, model.Password);
+            // Identity hashes passwords by default
+            var result = await _userManager.CreateAsync(user, model.Password);
 
-        if (result.Succeeded)
-        {
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            Console.WriteLine(token);
-            // Generate confirmation link
-            var confirmationLink = GenerateEmailConfirmationLink(token, user.Email);
-            Console.WriteLine(confirmationLink);
-            // Send confirmation email
-            await _emailService.SendEmailAsync(
-                user.Email,
-                "Email Confirmation",
-                $"Please confirm your email by clicking this link: {confirmationLink}");
+            if (result.Succeeded)
+            {
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                
+                // Generate confirmation link
+                var confirmationLink = GenerateEmailConfirmationLink(token, user.Email);
+                
+                // Send confirmation email
+                await _emailService.SendEmailAsync(
+                    user.Email,
+                    "Email Confirmation",
+                    $"Please confirm your email by clicking this link: {confirmationLink}");
+            }
+
+            // Commit transaction
+            await transaction.CommitAsync();
+
+            return result;
         }
-
-        return result;
+        catch (Exception)
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
 
     public async Task<string?> LoginUserAsync(LoginModel model)
