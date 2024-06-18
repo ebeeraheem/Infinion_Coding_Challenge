@@ -1,6 +1,6 @@
 using Infinion.Application;
 using Infinion.Domain;
-using Infinion.Infrastructure;
+using Infinion.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
