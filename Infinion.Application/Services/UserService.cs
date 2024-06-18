@@ -84,14 +84,18 @@ public class UserService : IUserService
             return null;
 
         var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user is null)
+            return null;
+
         var authClaims = new List<Claim>
         {
-            new (ClaimTypes.Name, user.UserName),
+            new (ClaimTypes.Name, user.UserName!), // UserName is not null here
             new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
         var authSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(_config.GetValue<string>("Jwt:Key")));
+            // Key is not null
+            Encoding.UTF8.GetBytes(_config.GetValue<string>("Jwt:Key")!));
 
         var signingCredentials = new SigningCredentials(
             authSigningKey, SecurityAlgorithms.HmacSha256);
