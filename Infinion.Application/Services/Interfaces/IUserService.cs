@@ -1,7 +1,7 @@
 ﻿using Infinion.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace Infinion.Application;
+namespace Infinion.Application.Services.Interfaces;
 public interface IUserService
 {
     Task<IdentityResult> ConfirmEmailAsync(string token, string email);

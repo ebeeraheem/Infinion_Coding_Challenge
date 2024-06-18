@@ -1,4 +1,5 @@
-﻿using Infinion.Domain.Entities;
+﻿using Infinion.Application.Services.Interfaces;
+using Infinion.Domain.Entities;
 using Infinion.Domain.Models;
 using Infinion.Infrastructure.HelperMethods;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Infinion.Application;
+namespace Infinion.Application.Services;
 public class UserService : IUserService
 {
     private readonly UserManager<ApplicationUser> _userManager;
@@ -98,9 +99,9 @@ public class UserService : IUserService
 
         var confirmationLink = UrlHelper.GenerateConfirmationLink(
             baseUrl!, // baseUrl is not null here
-            "Auth", 
-            "ConfirmEmail", 
-            token, 
+            "Auth",
+            "ConfirmEmail",
+            token,
             email);
 
         return confirmationLink;
