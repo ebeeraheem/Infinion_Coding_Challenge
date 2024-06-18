@@ -76,4 +76,13 @@ public class UserService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+
+    public async Task<IdentityResult> ConfirmEmailAsync(string token, string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email) ?? 
+            throw new InvalidOperationException("Invalid email address");
+
+        var result = await _userManager.ConfirmEmailAsync(user, token);
+        return result;
+    }
 }
