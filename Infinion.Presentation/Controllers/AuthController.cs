@@ -51,4 +51,28 @@ public class AuthController : ControllerBase
 
         return Ok(new { Token = token });
     }
+
+    [HttpGet("confirmemail")]
+    public async Task<IActionResult> ConfirmEmail(string token, string email)
+    {
+        try
+        {
+            var result = await _userService.ConfirmEmailAsync(token, email);
+
+            if (result.Succeeded)
+            {
+                return Ok("Email confirmed successfully.");
+            }
+
+            return BadRequest("Email confirmation failed.");
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occured");
+        }
+    }
 }
