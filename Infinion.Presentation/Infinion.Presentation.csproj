@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Infinion.Application\Infinion.Application.csproj" />
+    <ProjectReference Include="..\Infinion.Infrastructure\Infinion.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -18,7 +18,8 @@ builder.Services.AddSwaggerGen();
 // Configure database
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        sqlOptions => sqlOptions.MigrationsAssembly("Infinion.Infrastructure")));
 
 // Configure Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
