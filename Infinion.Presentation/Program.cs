@@ -1,3 +1,4 @@
+using Infinion.Application;
 using Infinion.Domain;
 using Infinion.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -43,6 +44,8 @@ builder.Services.AddAuthentication(options =>
         };
     });
 builder.Services.AddAuthorization();
+
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
