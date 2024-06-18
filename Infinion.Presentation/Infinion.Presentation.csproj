@@ -23,4 +23,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Infinion.Application\Infinion.Application.csproj" />
+  </ItemGroup>
+
 </Project>

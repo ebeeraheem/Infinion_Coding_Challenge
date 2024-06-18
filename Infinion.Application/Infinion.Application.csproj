@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Infinion.Domain\Infinion.Domain.csproj" />
+    <ProjectReference Include="..\Infinion.Infrastructure\Infinion.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
