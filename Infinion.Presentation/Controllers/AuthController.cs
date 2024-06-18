@@ -33,4 +33,22 @@ public class AuthController : ControllerBase
 
         return Ok("Registration successful, please check your email to confirm your account.");
     }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var token = await _userService.LoginUserAsync(model);
+
+        if (token is null)
+        {
+            return Unauthorized();
+        }
+
+        return Ok(new { Token = token });
+    }
 }
