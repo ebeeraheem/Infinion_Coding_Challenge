@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Infinion.Domain;
+namespace Infinion.Domain.Models;
 public class LoginModel
 {
     [Required]

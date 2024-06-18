@@ -1,5 +1,5 @@
 ﻿using Infinion.Application;
-using Infinion.Domain;
+using Infinion.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

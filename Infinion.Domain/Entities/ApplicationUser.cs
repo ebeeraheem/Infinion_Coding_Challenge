@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Infinion.Domain;
+namespace Infinion.Domain.Entities;
 public class ApplicationUser : IdentityUser
 {
     public string FirstName { get; set; } = string.Empty;

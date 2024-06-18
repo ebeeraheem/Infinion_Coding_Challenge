@@ -1,4 +1,4 @@
-﻿using Infinion.Domain;
+﻿using Infinion.Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

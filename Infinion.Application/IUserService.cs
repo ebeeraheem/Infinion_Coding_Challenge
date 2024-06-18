@@ -1,4 +1,4 @@
-﻿using Infinion.Domain;
+﻿using Infinion.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Infinion.Application;

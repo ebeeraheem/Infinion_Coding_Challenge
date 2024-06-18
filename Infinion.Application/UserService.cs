@@ -1,4 +1,5 @@
-﻿using Infinion.Domain;
+﻿using Infinion.Domain.Entities;
+using Infinion.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
