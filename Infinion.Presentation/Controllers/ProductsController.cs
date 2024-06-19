@@ -1,4 +1,5 @@
-﻿using Infinion.Application.Services.Interfaces;
+﻿using Infinion.Application.HelperMethods;
+using Infinion.Application.Services.Interfaces;
 using Infinion.Domain.DTOs;
 using Infinion.Domain.Entities;
 using Microsoft.AspNetCore.Http;
@@ -27,8 +28,6 @@ public class ProductsController : ControllerBase
     /// <param name="name">A partial match of the product name to filter by.</param>
     /// <param name="startDate">The start date for the created or updated date range filter.</param>
     /// <param name="endDate">The end date for the created or updated date range filter.</param>
-    /// <param name="sortBy">The field to sort by.</param>
-    /// <param name="sortOrder">The order of sorting, either 'asc' or 'desc'.</param>
     /// <param name="page">The page number for pagination.</param>
     /// <param name="pageSize">The number of items per page for pagination.</param>
     /// <returns>A list of products based on the provided filters.</returns>
@@ -47,15 +46,36 @@ public class ProductsController : ControllerBase
         [FromQuery] string? name = null,
         [FromQuery] DateTime? startDate = null,
         [FromQuery] DateTime? endDate = null,
-        [FromQuery] string? sortBy = null,
-        [FromQuery] string? sortOrder = "asc",
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 10)
     {
         try
         {
             var products = await _productService.GetAllProductsAsync();
-            return Ok(products);
+
+            var pagedResult = products.FilterProducts(
+                category,
+                minPrice,
+                maxPrice,
+                inStock,
+                name,
+                startDate,
+                endDate,
+                page,
+                pageSize);
+
+            Response.Headers.Append("X-Total-Count", pagedResult.TotalCount.ToString());
+
+            if (!pagedResult.Items.Any())
+            {
+                return NotFound("No products match the specified filters. Please adjust your search criteria.");
+            }
+
+            return Ok(pagedResult.Items);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
         }
         catch (Exception)
         {

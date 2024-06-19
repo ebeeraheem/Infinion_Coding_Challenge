@@ -1,11 +1,11 @@
 ﻿using Infinion.Domain.Entities;
+using Infinion.Domain.Results;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Infinion.Application.HelperMethods;
 public static class ProductHelper
 {
-    public static IEnumerable<Product> FilterProducts(
+    public static PagedResult<Product> FilterProducts(
         this IEnumerable<Product> products,
             string? category = null,
             decimal? minPrice = null,
@@ -14,8 +14,6 @@ public static class ProductHelper
             string? name = null,
             DateTime? startDate = null,
             DateTime? endDate = null,
-            string? sortBy = null,
-            string? sortOrder = "asc",
             int page = 1,
             int pageSize = 10)
     {
@@ -55,20 +53,13 @@ public static class ProductHelper
             products = products.Where(p => p.CreatedAt <= endDate.Value || p.LastUpdatedAt <= endDate.Value);
         }
 
-        if (!string.IsNullOrWhiteSpace(sortBy))
-        {
-            if (sortOrder.ToLower() == "desc")
-            {
-                products = products.OrderByDescending(
-                    p => EF.Property<object>(p, sortBy));
-            }
-            else
-            {
-                products = products.OrderBy(
-                    p => EF.Property<object>(p, sortBy));
-            }
-        }
+        var totalItems = products.Count();
 
-        return products;
+        var pagedProducts = products
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        return new PagedResult<Product>(totalItems, pagedProducts);
     }
 }
