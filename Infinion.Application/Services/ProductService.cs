@@ -75,7 +75,7 @@ public class ProductService : IProductService
         {
             _context.Products.Update(productToUpdate);
             await _context.SaveChangesAsync();
-            return product;
+            return productToUpdate;
         }
         catch (DbUpdateException ex)
         {
