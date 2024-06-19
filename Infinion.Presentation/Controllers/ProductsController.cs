@@ -115,7 +115,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<bool>> DeleteProduct(int id)
+    public async Task<ActionResult> DeleteProduct(int id)
     {
         try
         {
@@ -124,7 +124,7 @@ public class ProductsController : ControllerBase
             {
                 return NotFound($"Product with ID {id} not found.");
             }
-            return Ok(true);
+            return NoContent();
         }
         catch (Exception ex)
         {
