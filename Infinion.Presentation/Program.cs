@@ -3,6 +3,7 @@ using Infinion.Application.Services.Interfaces;
 using Infinion.Domain.Entities;
 using Infinion.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -66,7 +67,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(
         sqlOptions => sqlOptions.MigrationsAssembly("Infinion.Infrastructure")));
 
 // Configure Identity
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.User.RequireUniqueEmail = true;
+    options.Password.RequiredLength = 8;
+})
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
@@ -90,7 +95,12 @@ builder.Services.AddAuthentication(options =>
                 builder.Configuration.GetValue<string>("Jwt:Key")!))
         };
     });
-builder.Services.AddAuthorization();
+
+// Require users of the app to be authenticated
+builder.Services.AddAuthorizationBuilder()
+    .SetFallbackPolicy(new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build());
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
