@@ -77,17 +77,20 @@ public class UserService : IUserService
 
     public async Task<string?> LoginUserAsync(LoginModel model)
     {
+        var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user is null)
+            return null;
+
         var result = await _signInManager.PasswordSignInAsync(
             model.Email, model.Password, false, false);
 
         if (!result.Succeeded)
             return null;
 
-        var user = await _userManager.FindByEmailAsync(model.Email);
-        if (user is null)
+        if (!await _userManager.IsEmailConfirmedAsync(user))
             return null;
 
-        var authClaims = new List<Claim>
+            var authClaims = new List<Claim>
         {
             new (ClaimTypes.Name, user.UserName!), // UserName is not null here
             new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
