@@ -83,22 +83,27 @@ This project is a robust web application built using ASP.Net Web API (C#) that a
 ## API Endpoints
 ### User Registration
 - POST /api/auth/register
-    - Request Body: 
-     { 
-    "email": "user@example.com", 
-    "password": "Password123!", 
-    "firstName": "John", 
-    "lastName": "Doe" 
-     }
+    - Request Body:
+      ```json
+      { 
+       "email": "user@example.com", 
+       "password": "Password123!", 
+       "firstName": "John", 
+       "lastName": "Doe" 
+      }
+      ```
+     
     - Response: 200 OK
 
 ### User Login
 - POST /api/auth/login
     - Request Body: 
+     ```json
      { 
     "email": "user@example.com", 
     "password": "Password123!"
      }
+     ```
     - Response: 200 OK (with JWT token)
 
 ### Product CRUD Operations
@@ -108,6 +113,7 @@ This project is a robust web application built using ASP.Net Web API (C#) that a
     - Response: 200 OK
 - POST /api/products
     - Request Body: 
+     ```json
      {
     Name = "Office Chair",
     Description = "Comfortable ergonomic office chair.",
@@ -116,9 +122,11 @@ This project is a robust web application built using ASP.Net Web API (C#) that a
     Category = "Furniture",
     ImageUrl = new Uri("https://example.com/images/office-chair.jpg")
     }
+     ```
     - Response: 201 Created
 - PUT /api/products/{id}
     - Request Body: 
+     ```json
      {
     Id = 3,
     Name = "Office Chair",
@@ -130,6 +138,7 @@ This project is a robust web application built using ASP.Net Web API (C#) that a
     CreatedAt = 2024-06-19 15:02:32.7273568,
     LastUpdatedAt = 2024-06-19 15:02:32.7273568
     }
+     ```
     - Response: 204 No Content
 - DELETE /api/products/{id}
     - Response: 204 No Content
