@@ -17,7 +17,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Product>>> GetAllProductsAsync()
+    public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
     {
         try
         {
@@ -31,7 +31,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Product>> GetProductByIdAsync(int id)
+    public async Task<ActionResult<Product>> GetProductById(int id)
     {
         try
         {
@@ -50,7 +50,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Product>> CreateProductAsync(Product product)
+    public async Task<ActionResult<Product>> CreateProduct(Product product)
     {
         if (!ModelState.IsValid)
         {
@@ -61,7 +61,7 @@ public class ProductsController : ControllerBase
         {
             var newProduct = await _productService.CreateProductAsync(product);
 
-            return CreatedAtAction(nameof(GetProductByIdAsync), new { id = newProduct.Id }, newProduct);
+            return CreatedAtAction(nameof(GetProductById), new { id = newProduct.Id }, newProduct);
         }
         catch (ArgumentNullException ex)
         {
@@ -78,7 +78,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Product>> UpdateProductAsync(int id, Product product)
+    public async Task<ActionResult<Product>> UpdateProduct(int id, Product product)
     {
         if (id != product.Id)
         {
@@ -114,7 +114,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<bool>> DeleteProductAsync(int id)
+    public async Task<ActionResult<bool>> DeleteProduct(int id)
     {
         try
         {
