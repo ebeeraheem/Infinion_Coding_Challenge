@@ -45,13 +45,22 @@ public class ProductService : IProductService
     {
         ArgumentNullException.ThrowIfNull(product);
 
-        var prouductToUpdate = await _context.Products
+        var productToUpdate = await _context.Products
             .FirstOrDefaultAsync(p => p.Id == id) ??
             throw new InvalidOperationException($"Product with ID {id} not found.");
 
+        // Update only the necessary fields
+        productToUpdate.Name = product.Name;
+        productToUpdate.Description = product.Description;
+        productToUpdate.Price = product.Price;
+        productToUpdate.Stock = product.Stock;
+        productToUpdate.Category = product.Category;
+        productToUpdate.ImageUrl = product.ImageUrl;
+        productToUpdate.LastUpdatedAt = DateTime.UtcNow;
+
         try
         {
-            _context.Products.Update(product);
+            _context.Products.Update(productToUpdate);
             await _context.SaveChangesAsync();
             return product;
         }
