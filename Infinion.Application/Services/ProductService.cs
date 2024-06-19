@@ -1,9 +1,10 @@
-﻿using Infinion.Domain.Entities;
+﻿using Infinion.Application.Services.Interfaces;
+using Infinion.Domain.Entities;
 using Infinion.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infinion.Application.Services;
-public class ProductService
+public class ProductService : IProductService
 {
     private readonly ApplicationDbContext _context;
 
@@ -75,6 +76,6 @@ public class ProductService
             Console.WriteLine($"Error deleting product with id {productId}: {ex.Message}");
             throw;
         }
-        
+
     }
 }
