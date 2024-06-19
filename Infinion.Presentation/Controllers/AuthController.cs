@@ -86,7 +86,7 @@ public class AuthController : ControllerBase
             return Unauthorized(loginResult.ErrorMessage);
         }
 
-        return Ok(new { Token = loginResult .Token});
+        return Ok(new { loginResult.Token});
     }
 
     /// <summary>
