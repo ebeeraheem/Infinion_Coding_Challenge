@@ -36,6 +36,7 @@ public class ProductsController : ControllerBase
     /// <response code="404">If no product matches the specified filters.</response>
     /// <response code="500">If there was an internal server error.</response>
     [HttpGet]
+    [ResponseCache(Duration = 300, Location = ResponseCacheLocation.Any, NoStore = false)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

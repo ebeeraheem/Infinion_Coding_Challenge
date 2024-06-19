@@ -12,6 +12,7 @@ builder.AddSwaggerConfigs();
 builder.AddDatabaseConfigs();
 builder.AddAuthConfigs();
 builder.AddCustomServices();
+builder.Services.AddResponseCaching();
 
 var app = builder.Build();
 
@@ -26,6 +27,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseResponseCaching();
 
 app.UseAuthentication();
 app.UseAuthorization();
