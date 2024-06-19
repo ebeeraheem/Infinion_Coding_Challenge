@@ -79,14 +79,14 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var token = await _userService.LoginUserAsync(model);
+        var loginResult = await _userService.LoginUserAsync(model);
 
-        if (token is null)
+        if (!loginResult.Succeeded)
         {
-            return Unauthorized();
+            return Unauthorized(loginResult.ErrorMessage);
         }
 
-        return Ok(new { Token = token });
+        return Ok(new { Token = loginResult .Token});
     }
 
     /// <summary>
