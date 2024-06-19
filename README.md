@@ -98,12 +98,12 @@ This project is a robust web application built using ASP.Net Web API (C#) that a
 ### User Login
 - POST /api/auth/login
     - Request Body: 
-     ```json
-     { 
-    "email": "user@example.com", 
-    "password": "Password123!"
-     }
-     ```
+        ```json
+        { 
+       "email": "user@example.com", 
+       "password": "Password123!"
+        }
+        ```
     - Response: 200 OK (with JWT token)
 
 ### Product CRUD Operations
@@ -113,32 +113,32 @@ This project is a robust web application built using ASP.Net Web API (C#) that a
     - Response: 200 OK
 - POST /api/products
     - Request Body: 
-     ```json
-     {
-     "Name": "Office Chair",
-     "Description": "Comfortable ergonomic office chair.",
-     "Price": 20000.00,
-     "Stock": 200,
-     "Category": "Furniture",
-     "ImageUrl": "https://example.com/images/office-chair.jpg"
-     }
-     ```
+        ```json
+        {
+        "Name": "Office Chair",
+        "Description": "Comfortable ergonomic office chair.",
+        "Price": 20000.00,
+        "Stock": 200,
+        "Category": "Furniture",
+        "ImageUrl": "https://example.com/images/office-chair.jpg"
+        }
+        ```
     - Response: 201 Created
 - PUT /api/products/{id}
     - Request Body: 
-     ```json
-     {
-    "Id": 3,
-    "Name": "Office Chair",
-    "Description": "Comfortable ergonomic office chair.",
-    "Price": 20000.00,
-    "Stock": 200,
-    "Category": "Furniture",
-    "ImageUrl": "https://example.com/images/office-chair.jpg",
-    "CreatedAt": "2024-06-19T15:02:32.7273568",
-    "LastUpdatedAt": "2024-06-19T15:02:32.7273568"
-    }
-     ```
+        ```json
+        {
+       "Id": 3,
+       "Name": "Office Chair",
+       "Description": "Comfortable ergonomic office chair.",
+       "Price": 20000.00,
+       "Stock": 200,
+       "Category": "Furniture",
+       "ImageUrl": "https://example.com/images/office-chair.jpg",
+       "CreatedAt": "2024-06-19T15:02:32.7273568",
+       "LastUpdatedAt": "2024-06-19T15:02:32.7273568"
+       }
+        ```
     - Response: 204 No Content
 - DELETE /api/products/{id}
     - Response: 204 No Content
