@@ -32,10 +32,12 @@ public class ProductsController : ControllerBase
     /// <param name="pageSize">The number of items per page for pagination.</param>
     /// <returns>A list of products based on the provided filters.</returns>
     /// <response code="200">Returns the list of products.</response>
+    /// <response code="401">If the user is unauthorised.</response>
     /// <response code="404">If no product matches the specified filters.</response>
     /// <response code="500">If there was an internal server error.</response>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts(
@@ -89,10 +91,12 @@ public class ProductsController : ControllerBase
     /// <param name="id">The ID of the product to retrieve.</param>
     /// <returns>The product with the specified ID.</returns>
     /// <response code="200">Returns the product with the specified ID.</response>
+    /// <response code="401">If the user is unauthorised.</response>
     /// <response code="404">If the product with the specified ID is not found.</response>
     /// <response code="500">If there was an internal server error.</response>
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<Product>> GetProductById(int id)
@@ -120,10 +124,12 @@ public class ProductsController : ControllerBase
     /// <returns>The created product.</returns>
     /// <response code="201">Returns the created product.</response>
     /// <response code="400">If the product creation DTO is invalid.</response>
+    /// <response code="401">If the user is unauthorised.</response>
     /// <response code="500">If there was an internal server error.</response>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<Product>> CreateProduct([FromBody] ProductCreationDto productCreationDto)
     {
@@ -160,11 +166,13 @@ public class ProductsController : ControllerBase
     /// <returns>The updated product.</returns>
     /// <response code="200">Returns the updated product.</response>
     /// <response code="400">If the product update details are invalid.</response>
+    /// <response code="401">If the user is unauthorised.</response>
     /// <response code="404">If the product with the specified ID is not found.</response>
     /// <response code="500">If there was an internal server error.</response>
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<Product>> UpdateProduct(int id, Product product)
@@ -208,10 +216,12 @@ public class ProductsController : ControllerBase
     /// <param name="id">The ID of the product to delete.</param>
     /// <returns>A response indicating the result of the delete operation.</returns>
     /// <response code="204">If the product was successfully deleted.</response>
+    /// <response code="401">If the user is unauthorised.</response>
     /// <response code="404">If the product with the specified ID is not found.</response>
     /// <response code="500">If there was an internal server error.</response>
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> DeleteProduct(int id)
