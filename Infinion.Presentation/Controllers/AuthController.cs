@@ -1,10 +1,11 @@
 ﻿using Infinion.Application.Services.Interfaces;
 using Infinion.Domain.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Infinion.Presentation.Controllers;
+
+[AllowAnonymous]
 [Route("api/[controller]")]
 [ApiController]
 public class AuthController : ControllerBase
