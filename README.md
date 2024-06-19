@@ -115,28 +115,28 @@ This project is a robust web application built using ASP.Net Web API (C#) that a
     - Request Body: 
      ```json
      {
-    Name = "Office Chair",
-    Description = "Comfortable ergonomic office chair.",
-    Price = 20000.00m,
-    Stock = 200,
-    Category = "Furniture",
-    ImageUrl = new Uri("https://example.com/images/office-chair.jpg")
-    }
+     "Name": "Office Chair",
+     "Description": "Comfortable ergonomic office chair.",
+     "Price": 20000.00,
+     "Stock": 200,
+     "Category": "Furniture",
+     "ImageUrl": "https://example.com/images/office-chair.jpg"
+     }
      ```
     - Response: 201 Created
 - PUT /api/products/{id}
     - Request Body: 
      ```json
      {
-    Id = 3,
-    Name = "Office Chair",
-    Description = "Comfortable ergonomic office chair.",
-    Price = 20000.00m,
-    Stock = 200,
-    Category = "Furniture",
-    ImageUrl = new Uri("https://example.com/images/office-chair.jpg"),
-    CreatedAt = 2024-06-19 15:02:32.7273568,
-    LastUpdatedAt = 2024-06-19 15:02:32.7273568
+    "Id": 3,
+    "Name": "Office Chair",
+    "Description": "Comfortable ergonomic office chair.",
+    "Price": 20000.00,
+    "Stock": 200,
+    "Category": "Furniture",
+    "ImageUrl": "https://example.com/images/office-chair.jpg",
+    "CreatedAt": "2024-06-19T15:02:32.7273568",
+    "LastUpdatedAt": "2024-06-19T15:02:32.7273568"
     }
      ```
     - Response: 204 No Content
