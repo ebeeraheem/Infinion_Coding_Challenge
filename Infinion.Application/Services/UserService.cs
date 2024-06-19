@@ -1,6 +1,7 @@
 ﻿using Infinion.Application.Services.Interfaces;
 using Infinion.Domain.Entities;
 using Infinion.Domain.Models;
+using Infinion.Domain.Results;
 using Infinion.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -75,22 +76,22 @@ public class UserService : IUserService
         }
     }
 
-    public async Task<string?> LoginUserAsync(LoginModel model)
+    public async Task<LoginResult> LoginUserAsync(LoginModel model)
     {
         var user = await _userManager.FindByEmailAsync(model.Email);
         if (user is null)
-            return null;
+            return new LoginResult { Succeeded = false, ErrorMessage = "User not found." };
 
         var result = await _signInManager.PasswordSignInAsync(
             model.Email, model.Password, false, false);
 
         if (!result.Succeeded)
-            return null;
+            return new LoginResult { Succeeded = false, ErrorMessage = "Invalid credentials." };
 
         if (!await _userManager.IsEmailConfirmedAsync(user))
-            return null;
+            return new LoginResult { Succeeded = false, ErrorMessage = "Email not confirmed." };
 
-            var authClaims = new List<Claim>
+        var authClaims = new List<Claim>
         {
             new (ClaimTypes.Name, user.UserName!), // UserName is not null here
             new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
@@ -112,7 +113,9 @@ public class UserService : IUserService
         expires: DateTime.UtcNow.AddMinutes(3),
         signingCredentials: signingCredentials);
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+        return new LoginResult { Succeeded = true, Token = tokenString };
     }
 
     public async Task<IdentityResult> ConfirmEmailAsync(string token, string email)
