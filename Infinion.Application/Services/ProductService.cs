@@ -1,4 +1,5 @@
 ﻿using Infinion.Application.Services.Interfaces;
+using Infinion.Domain.DTOs;
 using Infinion.Domain.Entities;
 using Infinion.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -24,10 +25,22 @@ public class ProductService : IProductService
             .FirstOrDefaultAsync(p => p.Id == productId);
     }
 
-    public async Task<Product> CreateProductAsync(Product product)
+    public async Task<Product> CreateProductAsync(ProductCreationDto productCreationDto)
     {
-        ArgumentNullException.ThrowIfNull(product);
+        ArgumentNullException.ThrowIfNull(productCreationDto);
 
+        // Convert DTO to Product
+        var product = new Product()
+        {
+            Name = productCreationDto.Name,
+            Description = productCreationDto.Description,
+            Price = productCreationDto.Price,
+            Stock = productCreationDto.Stock,
+            Category = productCreationDto.Category,
+            ImageUrl = productCreationDto.ImageUrl,
+            CreatedAt = DateTime.UtcNow,
+            LastUpdatedAt = DateTime.UtcNow
+        };
         try
         {
             _context.Products.Add(product);

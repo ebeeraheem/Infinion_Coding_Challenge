@@ -1,4 +1,5 @@
 ﻿using Infinion.Application.Services.Interfaces;
+using Infinion.Domain.DTOs;
 using Infinion.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +51,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Product>> CreateProduct(Product product)
+    public async Task<ActionResult<Product>> CreateProduct([FromBody] ProductCreationDto productCreationDto)
     {
         if (!ModelState.IsValid)
         {
@@ -59,7 +60,7 @@ public class ProductsController : ControllerBase
 
         try
         {
-            var newProduct = await _productService.CreateProductAsync(product);
+            var newProduct = await _productService.CreateProductAsync(productCreationDto);
 
             return CreatedAtAction(nameof(GetProductById), new { id = newProduct.Id }, newProduct);
         }
