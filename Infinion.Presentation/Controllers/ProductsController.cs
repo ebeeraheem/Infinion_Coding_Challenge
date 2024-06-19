@@ -20,13 +20,37 @@ public class ProductsController : ControllerBase
     /// <summary>
     /// Retrieves all products.
     /// </summary>
-    /// <returns>A list of products.</returns>
+    /// <param name="category">The category to filter by.</param>
+    /// <param name="minPrice">The minimum price to filter by.</param>
+    /// <param name="maxPrice">The maximum price to filter by.</param>
+    /// <param name="inStock">Whether to filter by stock availability.</param>
+    /// <param name="name">A partial match of the product name to filter by.</param>
+    /// <param name="startDate">The start date for the created or updated date range filter.</param>
+    /// <param name="endDate">The end date for the created or updated date range filter.</param>
+    /// <param name="sortBy">The field to sort by.</param>
+    /// <param name="sortOrder">The order of sorting, either 'asc' or 'desc'.</param>
+    /// <param name="page">The page number for pagination.</param>
+    /// <param name="pageSize">The number of items per page for pagination.</param>
+    /// <returns>A list of products based on the provided filters.</returns>
     /// <response code="200">Returns the list of products.</response>
+    /// <response code="404">If no product matches the specified filters.</response>
     /// <response code="500">If there was an internal server error.</response>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
+    public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts(
+        [FromQuery] string? category = null,
+        [FromQuery] decimal? minPrice = null,
+        [FromQuery] decimal? maxPrice = null,
+        [FromQuery] bool? inStock = null,
+        [FromQuery] string? name = null,
+        [FromQuery] DateTime? startDate = null,
+        [FromQuery] DateTime? endDate = null,
+        [FromQuery] string? sortBy = null,
+        [FromQuery] string? sortOrder = "asc",
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10)
     {
         try
         {
