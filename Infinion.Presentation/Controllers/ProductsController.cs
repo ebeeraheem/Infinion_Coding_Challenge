@@ -92,12 +92,16 @@ public class ProductsController : ControllerBase
 
         try
         {
-            var updatedProduct = await _productService.UpdateProductAsync(product);
+            var updatedProduct = await _productService.UpdateProductAsync(id, product);
             return Ok(updatedProduct);
         }
         catch (ArgumentNullException ex)
         {
             return BadRequest($"Invalid product: {ex.Message}.");
+        }
+        catch (InvalidOperationException ex)
+        {
+            return NotFound(ex.Message);
         }
         catch (DbUpdateException ex)
         {

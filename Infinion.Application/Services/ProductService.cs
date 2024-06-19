@@ -41,9 +41,13 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task<Product> UpdateProductAsync(Product product)
+    public async Task<Product> UpdateProductAsync(int id, Product product)
     {
         ArgumentNullException.ThrowIfNull(product);
+
+        var prouductToUpdate = await _context.Products
+            .FirstOrDefaultAsync(p => p.Id == id) ??
+            throw new InvalidOperationException($"Product with ID {id} not found.");
 
         try
         {
